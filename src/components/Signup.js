@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
-import {Form,Segment,Header,Dropdown} from 'semantic-ui-react' 
-import {Link} from 'react-router-dom';   
+import {Form,Segment,Header,Dropdown,Loader,Dimmer} from 'semantic-ui-react' 
+import { useHistory } from 'react-router-dom'; //Used to redirect user after signup or login
 
-function SignupForm()
+function SignupForm(props)
 {
+    let history=useHistory();
 
-
+    const[load,setLoad]=useState(false); // Apply Loading while API Hitting
     {/* Used to show the error in field  */}
 
     const[nameError,setNameError]=useState("");
@@ -23,13 +24,26 @@ function SignupForm()
     const[name,setName]=useState("");
     const[mobile,setMobile]=useState("");
     const[address,setAddress]=useState("");
+    const[location,setLocation]=useState("");
     const[email,setEmail]=useState("");
     const[password,setPassword]=useState("");
     const[gst,setGst]=useState("");
     const[bank,setBank]=useState("");
     const[ac,setAc]=useState("");
     const[rtgs,setRtgs]=useState("");
+    const[loading,setLoading]=useState("");
+    const[godown,setGodown]=useState("");
+    const[union,setUnion]=useState("");
+    const[other,setOther]=useState("");
 
+
+    const validateDropdown=(e,{value})=>
+    {
+        e.persist();
+        console.log(e.target.textContent);
+        setLocation(e.target.textContent);
+
+    }
 
     const validate=(e)=>
     {
@@ -42,6 +56,7 @@ function SignupForm()
             else 
             {   
                 setNameError("")
+                setName(e.target.value)
             }
         }
 
@@ -54,6 +69,7 @@ function SignupForm()
             else 
             {
                 setMobileError("")
+                setMobile(e.target.value)
             }
         }
 
@@ -66,6 +82,7 @@ function SignupForm()
             else 
             {
                 setAddressError("");
+                setAddress(e.target.value)
             }
         }
 
@@ -78,6 +95,7 @@ function SignupForm()
             else 
             {
                 setPasswordError("");
+                setPassword(e.target.value)
             }
         }
 
@@ -90,6 +108,7 @@ function SignupForm()
             else 
             {
                 setGstError("");
+                setGst(e.target.value);
             }
         }
         
@@ -102,6 +121,7 @@ function SignupForm()
             else 
             {
                setBankError("");
+               setBank(e.target.value)
             }
         }
 
@@ -114,6 +134,7 @@ function SignupForm()
             else 
             {
                setAcError("");
+               setAc(e.target.value)
             }
         }
 
@@ -126,21 +147,49 @@ function SignupForm()
             else 
             {
                setRtgsError("");
+               setRtgs(e.target.value)
             }
+        }
+
+        if(e.target.name==='loading')
+        {
+           setLoading(e.target.value)
+        }
+
+        if(e.target.name==='godown')
+        {
+            setGodown(e.target.value)
+        }
+        
+        if(e.target.name==='union')
+        {
+            setUnion(e.target.value)
+        }
+
+        if(e.target.name==='other')
+        {
+            setOther(e.target.value)
+        }
+
+        if(e.target.name==='email')
+        {
+            setEmail(e.target.value)
         }
 
     }
 
-    const finalSubmit=()=>
+//Form Submit Functions
+
+    async function FinalSubmit(e)
     {
+        setLoad(true);
+    
         if(nameError==="" && mobileError==="" &&
          addressError==="" && emailError==="" &&
          passwordError==="" && gstError==="" &&
          bankError==="" && acError==="" &&
          rtgsError==="")
          {
-
-            
             console.log("Submitted")
             setNameError("");
             setMobileError("");
@@ -151,9 +200,46 @@ function SignupForm()
             setBankError("");
             setAcError("");
             setRtgsError("");
-            
-            return true;
 
+            //Sending the POST Request and saving the data into the database
+
+            await fetch
+            (
+            'http://my-bill-system.herokuapp.com/user-details', { method: 'POST',headers: {'Accept': 'application/json','Content-Type': 'application/json',},
+            body: JSON.stringify
+            (
+                { 
+                company_name: name,
+                company_address: address,
+                mobile_number: mobile,
+                gst_number: gst,
+                bank_name: bank,
+                ac_number: ac,
+                rtgs_number: rtgs,
+                loading_charges: loading,
+                godown_charges: godown,
+                unioin_charges: union,
+                other_charges: other,
+                password: password,
+                company_state: location,
+                email_id: email
+                }
+            )
+            })
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+            //Sending the POST Request and saving the data into the database
+
+
+
+            document.getElementById("signup").reset()
+
+            history.push('/login'); // Rediecting user to another page
+
+            sessionStorage.setItem('signup', true); //Wether User is Registered or not
+
+            return true;
          } 
          else 
          {
@@ -162,6 +248,8 @@ function SignupForm()
 
          }
     }
+
+//Form Submit Functions
 
 
 
@@ -201,12 +289,14 @@ function SignupForm()
 
     return (
 
+        <>
+
         <Segment  style={{marginTop:"8%"}} color="yellow"> 
         <h2 style={{textAlign:"center",color:"blue"}}>Create Account</h2>
 
         {/* Company Details*/}
 
-        <Form onSubmit={finalSubmit}>
+        <Form id="signup" onSubmit={FinalSubmit}>
         <Segment color="blue" >
             <Header>Company's Details</Header>
            
@@ -215,7 +305,7 @@ function SignupForm()
                 <Form.Input
                 {...{className:nameError}}
                 required
-                autofocus
+                autoFocus
                 placeholder="Company's Name"
                 name='name'
                 onChange={validate}
@@ -242,11 +332,9 @@ function SignupForm()
                 required
                 style={{width:"100%"}}
                 placeholder="State"
-                clearable 
-                search
                 selection
-                options={options} 
-                onChange={validate}
+                options={options}
+                onChange={validateDropdown}
                 /> 
 
                 <Form.Input
@@ -295,6 +383,7 @@ function SignupForm()
                 placeholder='Bank Name'
                 name='bankName'
                 onChange={validate}
+               
                 />
                 <Form.Input
                 type="number"
@@ -303,6 +392,7 @@ function SignupForm()
                 placeholder="Account Number"
                 name="acNumber"
                 onChange={validate}
+                
                 />
 
                 <Form.Input
@@ -311,6 +401,7 @@ function SignupForm()
                 placeholder="IFSC Code"
                 name="rtgs"
                 onChange={validate}
+               
                 />
 
             </Form.Group>
@@ -324,17 +415,21 @@ function SignupForm()
                 <Form.Input
                 required
                 placeholder='Vehicle Loading Charges'
-                name='laoding'
+                name='loading'
                 type="number"
                 onChange={validate}
+              
                 />
+
                 <Form.Input
                 required
                 placeholder='Godown Charges'
                 name='godown'
                 type="number"
                 onChange={validate}
+        
                 />
+
                 <Form.Input
                 required
                 placeholder="Union Charges"
@@ -356,7 +451,6 @@ function SignupForm()
         </Segment>
 
                 <Form.Group>
-                
                 <Form.Button type="submit" content='Sign Up' color="blue"/>
                 {/* <Form.Button content='Reset' type="reset" color="blue"/> */}
                 </Form.Group>
@@ -365,8 +459,12 @@ function SignupForm()
 
         </Segment>
 
+        {load ?  <Dimmer active><Loader active inline >Loading...</Loader></Dimmer>  : null}
+
+        </>
+
     );
 
 }
 
-export default SignupForm;
+export default  SignupForm;
