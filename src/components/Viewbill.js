@@ -1,14 +1,13 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Segment,Header,Table,Dimmer,Loader,Button,Icon} from 'semantic-ui-react';
-import {Link,useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function Viewbill(props)
 {
+
+    useEffect(()=>{document.title="MakeMyBill.com | View"},[])
+
     
-    // Taking Values from Headers 
-
-    var{billdata,date}=useParams();
-
     // Taking Values from Headers
     
     const printBill=()=>
@@ -59,25 +58,25 @@ function Viewbill(props)
                 <Segment>
                 
                     <Segment textAlign="left" style={{marginTop:"0px"}}  compact style={{marginTop:0}}>
-                        Bill Number - {props.location} <br/>
-                        Sending Date - {}
+                        Bill Number - {sessionStorage.getItem('view_billData')} <br/>
+                        Sending Date - {sessionStorage.getItem('view_billData').substring(0,10)}
                     </Segment>
 
                     <Segment compact textAlign="left">
                         
-                        To  :  {sessionStorage.getItem('receiverName')}, <br/>
-                        Destibnation : {sessionStorage.getItem('address')},<br/>
-                        State : {sessionStorage.getItem('receiverState')},<br/>
-                        GST Number : {sessionStorage.getItem('receiverGst')}
+                        To  :  {sessionStorage.getItem('view_receiver_name')}, <br/>
+                        Destibnation : {sessionStorage.getItem('view_receiver_address')},<br/>
+                        State : {sessionStorage.getItem('view_receiver_state')},<br/>
+                        GST Number : {sessionStorage.getItem('view_receiver_gst_number')}
 
                     </Segment>
 
                     <Segment.Group textAlign="center">
                         <Segment>  
-                        Number Of Packages : {sessionStorage.getItem('pkgs')} <br/>
+                        Number Of Packages : {sessionStorage.getItem('view_number_of_pkg')} <br/>
                         </Segment>
                         <Segment>
-                        Vehicle Number : {sessionStorage.getItem('vehicle')}
+                        Vehicle Number : {sessionStorage.getItem('view_vehicle_number')}
                         </Segment>
                     </Segment.Group>
 
@@ -94,7 +93,7 @@ function Viewbill(props)
                         <Table.Row>
                             <Table.Cell>1</Table.Cell>
                             <Table.Cell>Booking Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('booking')}</Table.Cell>
+                            <Table.Cell>{sessionStorage.getItem('view_booking_amount')}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
@@ -124,13 +123,13 @@ function Viewbill(props)
                         <Table.Row>
                             <Table.Cell>6</Table.Cell>
                             <Table.Cell>GST</Table.Cell>
-                            <Table.Cell>{Math.round(parseFloat(sessionStorage.getItem('gstAmount')) * 100)/100}</Table.Cell>
+                            <Table.Cell>{Math.round(parseFloat(sessionStorage.getItem('view_gst')) * 100)/100}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>7</Table.Cell>
                             <Table.Cell>Total Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('total')}</Table.Cell>
+                            <Table.Cell>{sessionStorage.getItem('view_total')}</Table.Cell>
                         </Table.Row>
 
                     </Table.Body>

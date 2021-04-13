@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Form,Segment,Header,Message,Loader,Dimmer} from 'semantic-ui-react'
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
@@ -7,9 +7,12 @@ function Login()
 {
     const history=useHistory();
     const[logInLabel,setLogInLabel]=useState(null);
+    const[networkError,setNetworkError]=useState(false);
     const[email,setEmail]=useState("");
     const[password,setPassword]=useState("");
     const[loading,setLoading]=useState(false);
+
+    useEffect(()=>{document.title="MakeMyBill.com | Login"},[]) // Setting title of window
 
     const onChangeValues=(e)=>
     {
@@ -34,6 +37,8 @@ function Login()
 
         // Calling the Get Request And Authorize user 
 
+    try 
+    {
         if(authResponse.data===1) //Check weather user is authenticated or not 
         {
             console.log(authResponse);
@@ -103,6 +108,12 @@ function Login()
             console.log(sessionStorage.getItem('user_id'))
         }
     }
+    catch(e)
+    {
+        setLoading(false);
+        setNetworkError(true);
+    }
+    }
 
     return(   
         <>
@@ -151,6 +162,7 @@ function Login()
             {/* {sessionStorage.getItem('authenticated')===true ? <Message color="green" compact basic >You have Logged in Successfully !</Message> : <Message color="red" compact basic >Please Enter Correct Email and Password !</Message>} */}
             {logInLabel}
             {loading ? <Dimmer active><Loader active inline >Loading...</Loader></Dimmer> : null}
+            {networkError ?  <Message color="red" compact basic >Failed to Login ! Please Check Your Internet Connection !</Message>:null}
             </center>
 
         </>

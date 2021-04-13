@@ -1,9 +1,13 @@
 import React from 'react'
+import { useEffect } from 'react/cjs/react.development'
 import {Segment,Image,Icon,Divider} from 'semantic-ui-react'
 import backImg from './Images/transport.jpg'
 
+
 function Background()
 {
+    useEffect(()=>{document.title="MakeMyBill.com"},[])
+
     return(
 
     <>

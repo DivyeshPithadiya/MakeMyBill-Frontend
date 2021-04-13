@@ -1,15 +1,18 @@
 import React,{useState,useEffect} from 'react';
 import {Table,Button,Segment,Icon,Loader,Dimmer} from 'semantic-ui-react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link,useHistory} from 'react-router-dom';
 
 
 function AllBills()
 { 
+    let history=useHistory();
 
     const[loading,setLoading]=useState(false);
     let response=0;
     const[billdetails,setBilldetails]=useState([])
+
+    useEffect(()=>{document.title="MakeMyBill.com | Dashboard"},[])
     
     // Whenever Component will be mounted first time below function will be called once
     useEffect(
@@ -20,6 +23,31 @@ function AllBills()
         setBilldetails((response).data)
         }
         ,[]);
+
+    // View Bill Details
+
+    function viewbill(bill)
+    {
+        console.log(bill);
+
+        sessionStorage.setItem('view_advance_amount',bill.advance_amount)
+        sessionStorage.setItem('view_billData',bill.billData)
+        sessionStorage.setItem('view_bill_number',bill.bill_number)
+        sessionStorage.setItem('view_booking_amount',bill.booking_amount)
+        sessionStorage.setItem('view_gst',bill.gst)
+        sessionStorage.setItem('view_number_of_pkg',bill.number_of_pkg)
+        sessionStorage.setItem('view_price_per_unit',bill.price_per_unit)
+        sessionStorage.setItem('view_receiver_address',bill.receiver_address)
+        sessionStorage.setItem('view_receiver_gst_number',bill.receiver_gst_number)
+        sessionStorage.setItem('view_receiver_name',bill.receiver_name)
+        sessionStorage.setItem('view_receiver_state',bill.receiver_state)
+        sessionStorage.setItem('view_total',bill.total)
+        sessionStorage.setItem('view_user_id',bill.user_id)
+        sessionStorage.setItem('view_vehicle_number',bill.vehicle_number)
+
+        history.push("/viewbill");
+
+    }
 
     // Delete Bill from List
     async function deleteBill(bill) {
@@ -98,7 +126,7 @@ function AllBills()
                     <Table.Cell>
 
                     <Link to={{pathname:'/viewbill' , state:{billdetail} }}>
-                    <Button color="instagram">
+                    <Button onClick={()=>viewbill(billdetail)} color="instagram">
                         View<Icon style={{marginLeft:10}} name="file"/>
                     </Button>
                     </Link>

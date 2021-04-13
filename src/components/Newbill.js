@@ -2,9 +2,11 @@ import React , {useState} from 'react';
 import {useHistory} from 'react-router-dom/cjs/react-router-dom.min';
 import {Segment,Form,Dimmer,Loader,Dropdown,Button} from 'semantic-ui-react';
 import axios from 'axios';
+import { useEffect } from 'react/cjs/react.development';
 
 function Newbill()
 {
+    useEffect(()=>{document.title="MakeMyBill.com | Make Bill"},[])
 
     let history=useHistory();
 

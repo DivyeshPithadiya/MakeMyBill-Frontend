@@ -1,10 +1,15 @@
-import React,{useState} from 'react'
-import {Form,Segment,Header,Dropdown,Loader,Dimmer} from 'semantic-ui-react' 
+import React,{useState,useEffect} from 'react'
+import {Form,Segment,Header,Dropdown,Loader,Dimmer,Message} from 'semantic-ui-react' 
 import { useHistory } from 'react-router-dom'; //Used to redirect user after signup or login
 
 function SignupForm(props)
 {
+
+    useEffect(()=>{document.title="MakeMyBill.com | Signup"},[])
+
     let history=useHistory();
+
+    const[errorMessage,setErrorMessage]=useState(false);
 
     const[load,setLoad]=useState(false); // Apply Loading while API Hitting
     {/* Used to show the error in field  */}
@@ -182,7 +187,6 @@ function SignupForm(props)
 
     async function FinalSubmit(e)
     {
-        setLoad(true);
     
         if(nameError==="" && mobileError==="" &&
          addressError==="" && emailError==="" &&
@@ -190,6 +194,10 @@ function SignupForm(props)
          bankError==="" && acError==="" &&
          rtgsError==="")
          {
+
+            
+            setLoad(true);
+
             console.log("Submitted")
             setNameError("");
             setMobileError("");
@@ -232,7 +240,6 @@ function SignupForm(props)
             //Sending the POST Request and saving the data into the database
 
 
-
             document.getElementById("signup").reset()
 
             history.push('/login'); // Rediecting user to another page
@@ -243,7 +250,8 @@ function SignupForm(props)
          } 
          else 
          {
-
+            setLoading(false);
+            setErrorMessage(true);
             return false;
 
          }
@@ -460,6 +468,8 @@ function SignupForm(props)
         </Segment>
 
         {load ?  <Dimmer active><Loader active inline >Loading...</Loader></Dimmer>  : null}
+
+        {errorMessage ? <center><Message color="red" compact>There is Some Wrong Details filled . Please Fill Correct Information !</Message></center> : null}
 
         </>
 
