@@ -4,7 +4,7 @@ import {Segment,Image,Icon,Divider} from 'semantic-ui-react'
 import backImg from './Images/transport.jpg'
 
 
-function Background()
+export default function Background()
 {
     useEffect(()=>{document.title="MakeMyBill.com"},[])
 
@@ -45,5 +45,3 @@ function Background()
         </>
     )
 }
-
-export default Background
