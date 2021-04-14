@@ -22,7 +22,7 @@ function Finalbill()
             try 
             {
                 setLoading(true);
-                response=await axios.get(`http://my-bill-system.herokuapp.com/getLatestBill/${sessionStorage.getItem('user_id')}`);
+                response=await axios.get(`https://my-bill-system.herokuapp.com/getLatestBill/${sessionStorage.getItem('user_id')}`);
                 sessionStorage.setItem('billData',response.data.billData)
                 console.log(response.data.billData);
                 response!==null ? setLoading(false) : setLoading(true);
