@@ -93,41 +93,47 @@ function Viewbill(props)
                         <Table.Row>
                             <Table.Cell>1</Table.Cell>
                             <Table.Cell>Booking Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('view_booking_amount')}</Table.Cell>
+                            <Table.Cell>+{sessionStorage.getItem('view_booking_amount')}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>2</Table.Cell>
                             <Table.Cell>Loading Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('loading_charges')}</Table.Cell>
+                            <Table.Cell>+{sessionStorage.getItem('loading_charges')}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>3</Table.Cell>
                             <Table.Cell>Godown Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('godown_charges')}</Table.Cell>
+                            <Table.Cell>+{sessionStorage.getItem('godown_charges')}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>4</Table.Cell>
                             <Table.Cell>Union Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('unioin_charges')}</Table.Cell>
+                            <Table.Cell>+{sessionStorage.getItem('unioin_charges')}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>5</Table.Cell>
                             <Table.Cell>Other Charges</Table.Cell>
-                            <Table.Cell>{sessionStorage.getItem('other_charges')}</Table.Cell>
+                            <Table.Cell>+{sessionStorage.getItem('other_charges')}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>6</Table.Cell>
                             <Table.Cell>GST</Table.Cell>
-                            <Table.Cell>{Math.round(parseFloat(sessionStorage.getItem('view_gst')) * 100)/100}</Table.Cell>
+                            <Table.Cell>+{Math.round(parseFloat(sessionStorage.getItem('view_gst')) * 100)/100}</Table.Cell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.Cell>7</Table.Cell>
+                            <Table.Cell>Advance Given</Table.Cell>
+                            <Table.Cell>-{sessionStorage.getItem('view_advance_amount')}</Table.Cell>
+                        </Table.Row>
+
+                        <Table.Row>
+                            <Table.Cell>8</Table.Cell>
                             <Table.Cell>Total Charges</Table.Cell>
                             <Table.Cell>{sessionStorage.getItem('view_total')}</Table.Cell>
                         </Table.Row>
