@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react/cjs/react.development'
+import React,{ useEffect }  from 'react'
 import {Segment,Image,Icon,Divider} from 'semantic-ui-react'
 import backImg from './Images/transport.jpg'
 
