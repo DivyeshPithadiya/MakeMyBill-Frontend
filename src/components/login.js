@@ -6,6 +6,7 @@ import {useHistory} from 'react-router-dom';
 function Login()
 {
     const history=useHistory();
+    const[signup,setSignup]=useState(sessionStorage.getItem('signup') );
     const[logInLabel,setLogInLabel]=useState(null);
     const[networkError,setNetworkError]=useState(false);
     const[email,setEmail]=useState("");
@@ -158,7 +159,7 @@ function Login()
             </Segment>
 
             <center>
-            {sessionStorage.getItem('signup') ? <Message color="green" compact basic >You Have Registered Successfully Please Login !</Message> : null}
+            {signup ? <Message color="green" compact basic >You Have Registered Successfully Please Login !</Message> : null}
             {/* {sessionStorage.getItem('authenticated')===true ? <Message color="green" compact basic >You have Logged in Successfully !</Message> : <Message color="red" compact basic >Please Enter Correct Email and Password !</Message>} */}
             {logInLabel}
             {loading ? <Dimmer active><Loader active inline >Loading...</Loader></Dimmer> : null}
