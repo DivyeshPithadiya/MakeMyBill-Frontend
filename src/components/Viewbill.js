@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import {Segment,Header,Table,Dimmer,Loader,Button,Icon} from 'semantic-ui-react';
+import {Segment,Header,Table,Button,Icon} from 'semantic-ui-react';
 import {Link} from 'react-router-dom'
 
 function Viewbill(props)

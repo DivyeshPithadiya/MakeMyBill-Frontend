@@ -1,7 +1,6 @@
-import React from 'react';
+import React , { useEffect,useState }  from 'react';
 import {Segment,Header,Table,Dimmer,Loader,Button,Icon} from 'semantic-ui-react';
 import {Link} from 'react-router-dom'
-import { useEffect,useState } from 'react/cjs/react.development';
 import axios from 'axios';
 function Finalbill()
 {
