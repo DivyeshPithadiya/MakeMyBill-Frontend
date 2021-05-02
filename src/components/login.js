@@ -40,7 +40,7 @@ function Login()
 
     try 
     {
-        if(authResponse.data===1) //Check weather user is authenticated or not 
+        if(authResponse.data>=1) //Check weather user is authenticated or not 
         {
             console.log(authResponse);
             sessionStorage.setItem('authenticated',true); //Set User As Authenticated

@@ -70,9 +70,9 @@ function Menubar() {
           </Link>
         </Menu.Item>
 
-        <Menu.Item>
+        {/* <Menu.Item>
           <Button color="red">Help</Button>
-        </Menu.Item>
+        </Menu.Item> */}
       
         {authenticated===true ? <Menu.Item><Button onClick={logout} primary>Log-Out</Button></Menu.Item> :  <Link to="/login"><Menu.Item><Button color="green">Log-in</Button></Menu.Item></Link> }
         
