@@ -39,9 +39,7 @@ function Login() {
     // Making the Get Request And Authorize user
 
     let authResponse = await axios
-      .get(
-        `https://my-bill-system.herokuapp.com/user-auth/${email}/${password}`
-      )
+      .get(`http://localhost:8080/user-auth/${email}/${password}`)
       .catch((error) => console.log("error", error));
 
     // Calling the Get Request And Authorize user
@@ -53,9 +51,7 @@ function Login() {
         sessionStorage.setItem("authenticated", true); //Set User As Authenticated
 
         let userDetailsResponse = await axios
-          .get(
-            `https://my-bill-system.herokuapp.com/user-details/${email}/${password}`
-          )
+          .get(`http://localhost:8080/user-details/${email}/${password}`)
           .catch((error) => console.log(error));
 
         console.log(userDetailsResponse);

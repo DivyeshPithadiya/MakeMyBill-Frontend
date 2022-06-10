@@ -1,15 +1,13 @@
-import React from 'react'
-import 'semantic-ui-css/semantic.min.css'
-import Menubar from './Menu.js'
+import React from "react";
+import "semantic-ui-css/semantic.min.css";
+import Menubar from "./Menu.js";
 
-function Navbar()
-{
-    return (
-
+function Navbar() {
+  return (
     <>
-            <Menubar/>
+      <Menubar />
     </>
-    )
+  );
 }
 
-export default Navbar
+export default Navbar;
